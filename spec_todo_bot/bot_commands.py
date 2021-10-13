@@ -1,8 +1,8 @@
 from nio import AsyncClient, MatrixRoom, RoomMessageText
 
-from my_project_name.chat_functions import react_to_event, send_text_to_room
-from my_project_name.config import Config
-from my_project_name.storage import Storage
+from spec_todo_bot.chat_functions import react_to_event, send_text_to_room
+from spec_todo_bot.config import Config
+from spec_todo_bot.storage import Storage
 
 
 class Command:
@@ -42,6 +42,8 @@ class Command:
         """Process the command"""
         if self.command.startswith("echo"):
             await self._echo()
+        if self.command.startswith("spectodo"):
+            await self._spectodo()
         elif self.command.startswith("react"):
             await self._react()
         elif self.command.startswith("help"):
@@ -53,6 +55,20 @@ class Command:
         """Echo back the command's arguments"""
         response = " ".join(self.args)
         await send_text_to_room(self.client, self.room.room_id, response)
+
+    async def _spectodo(self):
+        """Respond with the currently outstanding FCP ticks list"""
+        # Figure out which MSCs need review
+
+        # Read and parse their FCP tick list
+
+        # Figure out which ticks are still outstanding
+
+        # Construct a message with those outstanding ticks and a link to the MSC
+        message = "It's spec review hour! Below is a list of MSCs with FCP proposed."
+
+        # Send the message
+        await send_text_to_room(self.client, self.room.room_id, message, notice=False)
 
     async def _react(self):
         """Make the bot react to the command message"""
